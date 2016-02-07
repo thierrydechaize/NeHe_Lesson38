@@ -1,0 +1,117 @@
+// Modified for LCCWin32 compiler by Robert Wishlaw 2002/11/24
+
+/*
+*
+*******************************************
+*                                         *
+*   Resource File                         *
+*   Modified by Thierry DECHAIZE           *
+*   Date : 2015/05/03 					  *
+*******************************************
+*
+*/
+
+#if defined(_WIN32) || defined(_WIN64)
+
+#include <windows.h>
+#ifdef __LCC__
+#include <winver.h>
+#endif
+#include "resource.h"
+
+
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+
+IDB_BUTTERFLY1 BITMAP DISCARDABLE "Data\\Butterfly1.bmp"
+IDB_BUTTERFLY2 BITMAP DISCARDABLE "Data\\Butterfly2.bmp"
+IDB_BUTTERFLY3 BITMAP DISCARDABLE "Data\\Butterfly3.bmp"
+
+#define VER_FILEVERSION             1,0,2,0
+#define VER_FILEVERSION_STR         "1.02.0\0"
+
+#define VER_PRODUCTVERSION          1,0,2,0
+#define VER_PRODUCTVERSION_STR      "1.02.0\0"
+#define VER_DATE_BUILD              __DATE__
+
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - Unknown Compiler\0"
+#if defined(_MSC_VER)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - Visual Studio\0"
+#elif defined(__GNUC__)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - GNU C\0"
+#elif defined(__BORLANDC__)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - Borland C\0"
+#elif  defined(__TURBOC__)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - Borland C\0"
+#elif defined(__WATCOMC__)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - Watcom\0"
+#elif defined(__LCC__)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - LCC\0"
+#elif defined(__CYGWIN__)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - CYGWIN\0"
+#elif defined(__DMC__)
+#undef OPENGL_VERSIONINFO_NAME
+#define OPENGL_VERSIONINFO_NAME "OpenGL Lesson 38 - Digital Mars Compiler\0"
+#endif
+
+#define VER_SUPPORT     "thierry.dechaize@sfr.fr\0"
+#define VER_USERS       "all\0"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION    	    VER_FILEVERSION
+PRODUCTVERSION 	    VER_PRODUCTVERSION
+FILEFLAGSMASK  	    0x3F
+#ifdef _DEBUG
+ FILEFLAGS          0x1L
+#else
+ FILEFLAGS          0x0L
+#endif
+ FILEOS         	0x4L
+ FILETYPE       	0x1L
+ FILESUBTYPE    	0x0L
+ BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+//          VALUE "Build",            VER_DATE_BUILD    */
+//          VALUE "Comments",          "Originals modified by Thierry DECHAIZE (France)"
+//          VALUE "CompanyName",      "NEHE Productions"
+            VALUE "FileDescription",  "NEHE OpenGL Lesson01\0"
+            VALUE "FileVersion",      OPENGL_VERSIONINFO_NAME
+//          VALUE "InternalName",     OPENGL_VERSIONINFO_NAME
+//          VALUE "LegalCopyright",   "Copyright NEHE Productions\0"
+//          VALUE "LegalTrademarks1", VER_LEGALTRADEMARKS1_STR  */
+//          VALUE "LegalTrademarks2", VER_LEGALTRADEMARKS2_STR  */
+//          VALUE "OriginalFilename", "Lesson01\0"
+//          VALUE "ProductName",      "Legacy NEHE Tutorials OpenGL Windows\0"
+//          VALUE "ProductVersion",   OPENGL_VERSIONINFO_NAME
+//          VALUE "Licence",          "Licence defined by NEHE Productions\0"  */
+//          VALUE "Info",             "http://nehe.gamedev.net//\0"  */
+//          VALUE "Support",          VER_SUPPORT   */
+//          VALUE "Users",            VER_USERS    */
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        /* The following line should only be modified for localized versions.     */
+        /* It consists of any number of WORD,WORD pairs, with each pair           */
+        /* describing a language,codepage combination supported by the file.      */
+        /*                                                                        */
+        /* For example, a file might have values "0x409,1252" indicating that it  */
+        /* supports English language (0x409) in the Windows ANSI codepage (1252). */
+
+        VALUE "Translation", 0x040C, 1252 // French Language Translation
+
+    END
+END
+
+#endif //_WIN32 ou _WIN64

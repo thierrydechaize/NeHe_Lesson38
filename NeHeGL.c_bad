@@ -1,0 +1,208 @@
+/***********************************************
+*                                              *
+*    Jeff Molofee's Revised OpenGL Basecode    *
+*  Huge Thanks To Maxwell Sayles & Peter Puck  *
+*            http://nehe.gamedev.net           *
+*                     2001                     *
+*                                              *
+*      Modified for LCCWin32                   *
+*   compiler by Robert Wishlaw 2002/11/24      *
+***********************************************/
+
+/**          Comments manageable by Doxygen
+ *
+ * \file            NeHeGL.c
+ * \author          Created by Jeff Molofee and modified by Robert Whishlaw
+ * \author          Modified smoothly by Thierry Dechaize to verify paradigm : one source for multiple C or C++ free Compilers
+ * \version         1.0.1.2
+ * \date            9 janvier 2016
+ * \brief           A vérifier
+ * \details         Normalement les procédures générales pour lancer et configurer OpenGL dans un mode Windows.
+ *
+ *
+ */
+
+#if defined __CYGWIN__ || defined __LCC__
+#define WIN32_LEAN_AND_MEAN
+/* #define _STDCALL_SUPPORTED
+#define _M_IX86 */
+#endif
+
+#include <windows.h>		    // Header File For The Windows Library
+#if defined(__LCC__)
+#ifndef WINGDIAPI
+#   define WINGDIAPI __stdcall
+#endif
+#endif
+
+#include <gl/gl.h>			    // Header File For The OpenGL32 Library
+#include <gl/glu.h>			    // Header File For The GLu32 Library
+#include <gl\glext.h>		    // Header File For The GLext Library
+/* #include <gl\glaux.h>		// Header File For The Glaux Library  */
+
+#if defined __GNUC__ || defined __LCC__ || defined _MSC_VER || defined __TURBOC__
+#include <stdbool.h>
+#endif
+
+#ifdef __WATCOMC__
+#include <stdbool.h>
+typedef BOOLEAN         bool;
+#endif
+
+#if defined __DMC__
+typedef BOOL         bool;
+#endif
+
+#ifdef __DMC__
+#define GWLP_USERDATA (-21)                                             // Digital Mars Compiler don't declare GWLP_USERDATA
+#ifndef LONG_PTR
+#if defined(_WIN64)
+typedef __int64 LONG_PTR;
+#else
+typedef long LONG_PTR;
+#endif
+#endif
+#endif
+
+#include "NeHeGL.h"														// Header File For The NeHeGL Basecode
+
+GL_Window*	g_window;
+Keys*		g_keys;
+
+// User Defined Variables
+GLuint texture[3],texid[3];										// Storage For 3 Textures
+
+#define WM_TOGGLEFULLSCREEN (WM_USER+1)									// Application Define Message For Toggling
+
+static BOOL g_isProgramLooping;											// Window Creation Loop, For FullScreen/Windowed Toggle																		// Between Fullscreen / Windowed Mode
+static BOOL g_createFullScreen;											// If TRUE, Then Create Fullscreen
+
+
+typedef struct _OBJECT											// Create A Structure Called Object
+{
+	int   tex;													// Integer Used To Select Our Texture
+	float x;													// X Position
+	float y;													// Y Position
+	float z;													// Z Position
+	float yi;													// Y Increase Speed (Fall Speed)
+	float spinz;												// Z Axis Spin
+	float spinzi;												// Z Axis Spin Speed
+	float flap;													// Flapping Triangles :)
+	float fi;													// Flap Direction (Increase Value)
+}OBJECT, *LPOBJECT;
+
+static OBJECT   obj[50];										// Create 50 Objects Using The Object Structure
+
+void TerminateApplication(GL_Window* window)							// Terminate The Application
+{
+	PostMessage (window->hWnd, WM_QUIT, 0, 0);							// Send A WM_QUIT Message
+	g_isProgramLooping = FALSE;											// Stop Looping Of The Program
+}
+
+void ToggleFullscreen(GL_Window* window)								// Toggle Fullscreen/Windowed
+{
+	PostMessage (window->hWnd, WM_TOGGLEFULLSCREEN, 0, 0);				// Send A WM_TOGGLEFULLSCREEN Message
+}
+
+void ReshapeGL (int width, int height)									// Reshape The Window When It's Moved Or Resized
+{
+	glViewport (0, 0, (GLsizei)(width), (GLsizei)(height));				// Reset The Current Viewport
+	glMatrixMode (GL_PROJECTION);										// Select The Projection Matrix
+	glLoadIdentity ();													// Reset The Projection Matrix
+	gluPerspective (45.0f, (GLfloat)(width)/(GLfloat)(height),			// Calculate The Aspect Ratio Of The Window
+					1.0f, 1000.0f);
+	glMatrixMode (GL_MODELVIEW);										// Select The Modelview Matrix
+	glLoadIdentity ();													// Reset The Modelview Matrix
+}
+
+BOOL InitializeGL(GL_Window* window, Keys* keys)					// Any GL Init Code & User Initialiazation Goes Here
+{
+	int         loop=0;
+
+	g_window	= window;
+	g_keys		= keys;
+
+	// Start Of User Initialization
+	LoadGLTextures();											// Load The Textures From Our Resource File
+
+	glClearColor (0.0f, 0.0f, 0.0f, 0.5f);						// Black Background
+	glClearDepth (1.0f);										// Depth Buffer Setup
+	glDepthFunc (GL_LEQUAL);									// The Type Of Depth Testing (Less Or Equal)
+	glDisable(GL_DEPTH_TEST);									// Disable Depth Testing
+	glShadeModel (GL_SMOOTH);									// Select Smooth Shading
+	glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			// Set Perspective Calculations To Most Accurate
+	glEnable(GL_TEXTURE_2D);									// Enable Texture Mapping
+	glBlendFunc(GL_ONE,GL_SRC_ALPHA);							// Set Blending Mode (Cheap / Quick)
+	glEnable(GL_BLEND);											// Enable Blending
+
+	for (loop=0; loop<50; loop++)							// Loop To Initialize 50 Objects
+	{
+		SetObject(loop);										// Call SetObject To Assign New Random Values
+	}
+
+	return TRUE;												// Return TRUE (Initialization Successful)
+}
+
+void DeinitializeGL(void)										// Any User DeInitialization Goes Here
+{
+}
+
+void UpdateGL(DWORD milliseconds)								// Perform Motion Updates Here
+{
+	if (g_keys->keyDown [VK_ESCAPE] == TRUE)					// Is ESC Being Pressed?
+	{
+		TerminateApplication (g_window);						// Terminate The Program
+	}
+
+	if (g_keys->keyDown [VK_F1] == TRUE)						// Is F1 Being Pressed?
+	{
+		ToggleFullscreen (g_window);							// Toggle Fullscreen Mode
+	}
+}
+
+void DrawGL(void)												// Draw The Scene
+{
+    int loop=0;
+
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear Screen And Depth Buffer
+
+	for (loop=0; loop<50; loop++)							    // Loop Of 50 (Draw 50 Objects)
+	{
+		glLoadIdentity ();										// Reset The Modelview Matrix
+		glBindTexture(GL_TEXTURE_2D, texture[obj[loop].tex]);	// Bind Our Texture
+		glTranslatef(obj[loop].x,obj[loop].y,obj[loop].z);		// Position The Object
+		glRotatef(45.0f,1.0f,0.0f,0.0f);						// Rotate On The X-Axis
+		glRotatef((obj[loop].spinz),0.0f,0.0f,1.0f);			// Spin On The Z-Axis
+
+		glBegin(GL_TRIANGLES);									// Begin Drawing Triangles
+			// First Triangle														    _____
+			glTexCoord2f(1.0f,1.0f); glVertex3f( 1.0f, 1.0f, 0.0f);				//	(2)|    / (1)
+			glTexCoord2f(0.0f,1.0f); glVertex3f(-1.0f, 1.0f, obj[loop].flap);	//	   |  /
+			glTexCoord2f(0.0f,0.0f); glVertex3f(-1.0f,-1.0f, 0.0f);				//	(3)|/
+
+			// Second Triangle
+			glTexCoord2f(1.0f,1.0f); glVertex3f( 1.0f, 1.0f, 0.0f);				//	       /|(1)
+			glTexCoord2f(0.0f,0.0f); glVertex3f(-1.0f,-1.0f, 0.0f);				//	     /  |
+			glTexCoord2f(1.0f,0.0f); glVertex3f( 1.0f,-1.0f, obj[loop].flap);	//	(2)/____|(3)
+
+		glEnd();												// Done Drawing Triangles
+
+		obj[loop].y-=obj[loop].yi;								// Move Object Down The Screen
+		obj[loop].spinz+=obj[loop].spinzi;						// Increase Z Rotation By spinzi
+		obj[loop].flap+=obj[loop].fi;							// Increase flap Value By fi
+
+		if (obj[loop].y<-18.0f)									// Is Object Off The Screen?
+		{
+			SetObject(loop);									// If So, Reassign New Values
+		}
+
+		if ((obj[loop].flap>1.0f) || (obj[loop].flap<-1.0f))	// Time To Change Flap Direction?
+		{
+			obj[loop].fi=-obj[loop].fi;							// Change Direction By Making fi = -fi
+		}
+	}
+
+	Sleep(15);													// Create A Short Delay (15 Milliseconds)
+
+	glFlush ();													// Flush The GL Rendering Pipeline
+}

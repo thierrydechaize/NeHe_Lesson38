@@ -1,0 +1,2 @@
+NeHeGL.c(126): Warning! W131: No prototype found for function 'LoadGLTextures'
+NeHeGL.c(140): Warning! W131: No prototype found for function 'SetObject'

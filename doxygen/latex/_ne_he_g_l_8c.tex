@@ -1,0 +1,207 @@
+\hypertarget{_ne_he_g_l_8c}{}\section{Référence du fichier C\+:/src/\+Open\+G\+L/\+Lesson38/\+Ne\+He\+GL.c}
+\label{_ne_he_g_l_8c}\index{C\+:/src/\+Open\+G\+L/\+Lesson38/\+Ne\+He\+G\+L.\+c@{C\+:/src/\+Open\+G\+L/\+Lesson38/\+Ne\+He\+G\+L.\+c}}
+
+
+A v�rifier.  
+
+
+{\ttfamily \#include $<$windows.\+h$>$}\\*
+{\ttfamily \#include $<$gl/gl.\+h$>$}\\*
+{\ttfamily \#include $<$gl/glu.\+h$>$}\\*
+{\ttfamily \#include $<$gl\textbackslash{}glext.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Ne\+He\+G\+L.\+h\char`\"{}}\\*
+\subsection*{Structures de données}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct___o_b_j_e_c_t}{\+\_\+\+O\+B\+J\+E\+CT}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_ne_he_g_l_8c_a527ebd50a21f72cd2b9fddef165ed238}{W\+M\+\_\+\+T\+O\+G\+G\+L\+E\+F\+U\+L\+L\+S\+C\+R\+E\+EN}~(W\+M\+\_\+\+U\+S\+ER+1)
+\end{DoxyCompactItemize}
+\subsection*{Définitions de type}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct___o_b_j_e_c_t}{\+\_\+\+O\+B\+J\+E\+CT} \hyperlink{_ne_he_g_l_8c_a39a45f83200510a73f63ab01935a0365}{O\+B\+J\+E\+CT}
+\item 
+typedef struct \hyperlink{struct___o_b_j_e_c_t}{\+\_\+\+O\+B\+J\+E\+CT} $\ast$ \hyperlink{_ne_he_g_l_8c_aa59ed219db0ffd7c180f59bdd74cdb96}{L\+P\+O\+B\+J\+E\+CT}
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_ne_he_g_l_8c_a0fdcd098e981b37c3685361619834b1e}{Terminate\+Application} (\hyperlink{struct_g_l___window}{G\+L\+\_\+\+Window} $\ast$window)
+\item 
+void \hyperlink{_ne_he_g_l_8c_a64336eb1fbbdd65a88ef980e54f8c612}{Toggle\+Fullscreen} (\hyperlink{struct_g_l___window}{G\+L\+\_\+\+Window} $\ast$window)
+\item 
+void \hyperlink{_ne_he_g_l_8c_acd8e77ed23d70212a163cf8cbc5ac3eb}{Reshape\+GL} (int width, int height)
+\item 
+B\+O\+OL \hyperlink{_ne_he_g_l_8c_ae01d03c37420eae5a2e649b47910aec9}{Initialize\+GL} (\hyperlink{struct_g_l___window}{G\+L\+\_\+\+Window} $\ast$window, \hyperlink{struct_keys}{Keys} $\ast$keys)
+\item 
+void \hyperlink{_ne_he_g_l_8c_a82aad0bed68b733d30e4f9ffdf488783}{Deinitialize\+GL} (void)
+\item 
+void \hyperlink{_ne_he_g_l_8c_a7562d6953c213b615a1940d1a3bafaae}{Update\+GL} (D\+W\+O\+RD milliseconds)
+\item 
+void \hyperlink{_ne_he_g_l_8c_a7249497363cfe93d4a2dd17d1ef031b9}{Draw\+GL} (void)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_g_l___window}{G\+L\+\_\+\+Window} $\ast$ \hyperlink{_ne_he_g_l_8c_a8eb8e78356ceae9f4a7d46916e8dc161}{g\+\_\+window}
+\item 
+\hyperlink{struct_keys}{Keys} $\ast$ \hyperlink{_ne_he_g_l_8c_a9efe217743a3aa1f39bef72908d9186a}{g\+\_\+keys}
+\item 
+G\+Luint \hyperlink{_ne_he_g_l_8c_ae303c167c23691bbf165ab05813e5713}{texture} \mbox{[}3\mbox{]}
+\item 
+G\+Luint \hyperlink{_ne_he_g_l_8c_a04b2088c33683580ff9664f8a35cef23}{texid} \mbox{[}3\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+A v�rifier. 
+
+Comments manageable by Doxygen
+
+\begin{DoxyAuthor}{Auteur}
+Created by Jeff Molofee and modified by Robert Whishlaw 
+
+Modified smoothly by Thierry Dechaize to verify paradigm \+: one source for multiple C or C++ free Compilers 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+1.\+2 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9 janvier 2016
+\end{DoxyDate}
+Normalement les proc�dures g�n�rales pour lancer et configurer Open\+GL dans un mode Windows. 
+
+\subsection{Documentation des macros}
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!W\+M\+\_\+\+T\+O\+G\+G\+L\+E\+F\+U\+L\+L\+S\+C\+R\+E\+EN@{W\+M\+\_\+\+T\+O\+G\+G\+L\+E\+F\+U\+L\+L\+S\+C\+R\+E\+EN}}
+\index{W\+M\+\_\+\+T\+O\+G\+G\+L\+E\+F\+U\+L\+L\+S\+C\+R\+E\+EN@{W\+M\+\_\+\+T\+O\+G\+G\+L\+E\+F\+U\+L\+L\+S\+C\+R\+E\+EN}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{W\+M\+\_\+\+T\+O\+G\+G\+L\+E\+F\+U\+L\+L\+S\+C\+R\+E\+EN}{WM_TOGGLEFULLSCREEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define W\+M\+\_\+\+T\+O\+G\+G\+L\+E\+F\+U\+L\+L\+S\+C\+R\+E\+EN~(W\+M\+\_\+\+U\+S\+ER+1)}\hypertarget{_ne_he_g_l_8c_a527ebd50a21f72cd2b9fddef165ed238}{}\label{_ne_he_g_l_8c_a527ebd50a21f72cd2b9fddef165ed238}
+
+
+Définition à la ligne 75 du fichier Ne\+He\+G\+L.\+c.
+
+
+
+\subsection{Documentation des définitions de type}
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!L\+P\+O\+B\+J\+E\+CT@{L\+P\+O\+B\+J\+E\+CT}}
+\index{L\+P\+O\+B\+J\+E\+CT@{L\+P\+O\+B\+J\+E\+CT}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{L\+P\+O\+B\+J\+E\+CT}{LPOBJECT}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+O\+B\+J\+E\+CT} $\ast$ {\bf L\+P\+O\+B\+J\+E\+CT}}\hypertarget{_ne_he_g_l_8c_aa59ed219db0ffd7c180f59bdd74cdb96}{}\label{_ne_he_g_l_8c_aa59ed219db0ffd7c180f59bdd74cdb96}
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!O\+B\+J\+E\+CT@{O\+B\+J\+E\+CT}}
+\index{O\+B\+J\+E\+CT@{O\+B\+J\+E\+CT}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{O\+B\+J\+E\+CT}{OBJECT}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \+\_\+\+O\+B\+J\+E\+CT} {\bf O\+B\+J\+E\+CT}}\hypertarget{_ne_he_g_l_8c_a39a45f83200510a73f63ab01935a0365}{}\label{_ne_he_g_l_8c_a39a45f83200510a73f63ab01935a0365}
+
+
+\subsection{Documentation des fonctions}
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!Deinitialize\+GL@{Deinitialize\+GL}}
+\index{Deinitialize\+GL@{Deinitialize\+GL}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{Deinitialize\+G\+L(void)}{DeinitializeGL(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Deinitialize\+GL (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_ne_he_g_l_8c_a82aad0bed68b733d30e4f9ffdf488783}{}\label{_ne_he_g_l_8c_a82aad0bed68b733d30e4f9ffdf488783}
+
+
+Définition à la ligne 146 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!Draw\+GL@{Draw\+GL}}
+\index{Draw\+GL@{Draw\+GL}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{Draw\+G\+L(void)}{DrawGL(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Draw\+GL (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_ne_he_g_l_8c_a7249497363cfe93d4a2dd17d1ef031b9}{}\label{_ne_he_g_l_8c_a7249497363cfe93d4a2dd17d1ef031b9}
+
+
+Définition à la ligne 163 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!Initialize\+GL@{Initialize\+GL}}
+\index{Initialize\+GL@{Initialize\+GL}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{Initialize\+G\+L(\+G\+L\+\_\+\+Window $\ast$window, Keys $\ast$keys)}{InitializeGL(GL_Window *window, Keys *keys)}}]{\setlength{\rightskip}{0pt plus 5cm}B\+O\+OL Initialize\+GL (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+L\+\_\+\+Window} $\ast$}]{window, }
+\item[{{\bf Keys} $\ast$}]{keys}
+\end{DoxyParamCaption}
+)}\hypertarget{_ne_he_g_l_8c_ae01d03c37420eae5a2e649b47910aec9}{}\label{_ne_he_g_l_8c_ae01d03c37420eae5a2e649b47910aec9}
+
+
+Définition à la ligne 118 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!Reshape\+GL@{Reshape\+GL}}
+\index{Reshape\+GL@{Reshape\+GL}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{Reshape\+G\+L(int width, int height)}{ReshapeGL(int width, int height)}}]{\setlength{\rightskip}{0pt plus 5cm}void Reshape\+GL (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+)}\hypertarget{_ne_he_g_l_8c_acd8e77ed23d70212a163cf8cbc5ac3eb}{}\label{_ne_he_g_l_8c_acd8e77ed23d70212a163cf8cbc5ac3eb}
+
+
+Définition à la ligne 107 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!Terminate\+Application@{Terminate\+Application}}
+\index{Terminate\+Application@{Terminate\+Application}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{Terminate\+Application(\+G\+L\+\_\+\+Window $\ast$window)}{TerminateApplication(GL_Window *window)}}]{\setlength{\rightskip}{0pt plus 5cm}void Terminate\+Application (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+L\+\_\+\+Window} $\ast$}]{window}
+\end{DoxyParamCaption}
+)}\hypertarget{_ne_he_g_l_8c_a0fdcd098e981b37c3685361619834b1e}{}\label{_ne_he_g_l_8c_a0fdcd098e981b37c3685361619834b1e}
+
+
+Définition à la ligne 96 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!Toggle\+Fullscreen@{Toggle\+Fullscreen}}
+\index{Toggle\+Fullscreen@{Toggle\+Fullscreen}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{Toggle\+Fullscreen(\+G\+L\+\_\+\+Window $\ast$window)}{ToggleFullscreen(GL_Window *window)}}]{\setlength{\rightskip}{0pt plus 5cm}void Toggle\+Fullscreen (
+\begin{DoxyParamCaption}
+\item[{{\bf G\+L\+\_\+\+Window} $\ast$}]{window}
+\end{DoxyParamCaption}
+)}\hypertarget{_ne_he_g_l_8c_a64336eb1fbbdd65a88ef980e54f8c612}{}\label{_ne_he_g_l_8c_a64336eb1fbbdd65a88ef980e54f8c612}
+
+
+Définition à la ligne 102 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!Update\+GL@{Update\+GL}}
+\index{Update\+GL@{Update\+GL}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{Update\+G\+L(\+D\+W\+O\+R\+D milliseconds)}{UpdateGL(DWORD milliseconds)}}]{\setlength{\rightskip}{0pt plus 5cm}void Update\+GL (
+\begin{DoxyParamCaption}
+\item[{D\+W\+O\+RD}]{milliseconds}
+\end{DoxyParamCaption}
+)}\hypertarget{_ne_he_g_l_8c_a7562d6953c213b615a1940d1a3bafaae}{}\label{_ne_he_g_l_8c_a7562d6953c213b615a1940d1a3bafaae}
+
+
+Définition à la ligne 150 du fichier Ne\+He\+G\+L.\+c.
+
+
+
+\subsection{Documentation des variables}
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!g\+\_\+keys@{g\+\_\+keys}}
+\index{g\+\_\+keys@{g\+\_\+keys}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{g\+\_\+keys}{g_keys}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Keys}$\ast$ g\+\_\+keys}\hypertarget{_ne_he_g_l_8c_a9efe217743a3aa1f39bef72908d9186a}{}\label{_ne_he_g_l_8c_a9efe217743a3aa1f39bef72908d9186a}
+
+
+Définition à la ligne 70 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!g\+\_\+window@{g\+\_\+window}}
+\index{g\+\_\+window@{g\+\_\+window}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{g\+\_\+window}{g_window}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf G\+L\+\_\+\+Window}$\ast$ g\+\_\+window}\hypertarget{_ne_he_g_l_8c_a8eb8e78356ceae9f4a7d46916e8dc161}{}\label{_ne_he_g_l_8c_a8eb8e78356ceae9f4a7d46916e8dc161}
+
+
+Définition à la ligne 69 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!texid@{texid}}
+\index{texid@{texid}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{texid}{texid}}]{\setlength{\rightskip}{0pt plus 5cm}G\+Luint texid\mbox{[}3\mbox{]}}\hypertarget{_ne_he_g_l_8c_a04b2088c33683580ff9664f8a35cef23}{}\label{_ne_he_g_l_8c_a04b2088c33683580ff9664f8a35cef23}
+
+
+Définition à la ligne 73 du fichier Ne\+He\+G\+L.\+c.
+
+\index{Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}!texture@{texture}}
+\index{texture@{texture}!Ne\+He\+G\+L.\+c@{Ne\+He\+G\+L.\+c}}
+\subsubsection[{\texorpdfstring{texture}{texture}}]{\setlength{\rightskip}{0pt plus 5cm}G\+Luint texture\mbox{[}3\mbox{]}}\hypertarget{_ne_he_g_l_8c_ae303c167c23691bbf165ab05813e5713}{}\label{_ne_he_g_l_8c_ae303c167c23691bbf165ab05813e5713}
+
+
+Définition à la ligne 73 du fichier Ne\+He\+G\+L.\+c.
+

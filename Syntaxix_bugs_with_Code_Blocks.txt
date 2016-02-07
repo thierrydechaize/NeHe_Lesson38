@@ -1,0 +1,30 @@
+First syntaxic bug detected with Code::Blocks nigthly svn 10050 with OpenWatcom compiler C/C++ :
+
+-------------- Clean: Release Open WATCOM in Lesson38 (compiler: OpenWatcom (W32) Compiler)---------------
+
+Cleaned "Lesson38 - Release Open WATCOM"
+
+-------------- Build: Release Open WATCOM in Lesson38 (compiler: OpenWatcom (W32) Compiler)---------------
+
+wrc.exe -q -r -fo=objOpenWATCOM\Release\Lesson38.res -iC:\watcom\h\nt -iC:\watcom\h Lesson38.rc
+wcl386.exe -q -c    -iC:\watcom\h\nt -iC:\watcom\h -fo=objOpenWATCOM\Release\NeHeGL.obj NeHeGL.c
+NeHeGL.c(316): Warning! W124: Comparison result always 1
+NeHeGL.c(324): Warning! W124: Comparison result always 1
+wcl386.exe -q -c    -iC:\watcom\h\nt -iC:\watcom\h -fo=objOpenWATCOM\Release\Lesson38.obj Lesson38.c
+wlink.exe option quiet system nt_win  LIBP  C:\watcom\lib386\nt;C:\watcom\lib386 file ,objOpenWATCOM\Release\NeHeGL.obj,objOpenWATCOM\Release\Lesson38.obj name binOpenWATCOM\Release\Lesson38.exe library glu32,opengl32,advapi32,comdlg32,gdi32,winmm option resource=objOpenWATCOM\Release\Lesson38.res
+                                                                                     |
+Error! E3033: directive error near 'file'                      (The problem is upper |, with directive "file" not comma in first position before list of components)
+Process terminated with status 1 (0 minute(s), 0 second(s))
+0 error(s), 2 warning(s) (0 minute(s), 0 second(s))
+
+Copy the instruction wlink , paste in "cmd" windows (with correct PATH contained C:/WATCOM/binnt) and suppress comma resolve the problem.
+
+Another syntaxic bug detected with Code::Blocks nigthly svn 10050 with lcc (or lcc64) compiler (only C) :
+
+The good syntax for this compiler, in this order, with resource file is :
+	lrc.exe -IC:\lcc\include -foobjllc\Debug\Lesson38.res Lesson38.rc
+	
+Code::Blocks generate another order. 
+Consequence, the "res" file is not generate on good destination, but only at the "root" (~ Lesson38) of file structure of this project.
+
+My solution is to introduce "pre build steps" with correct syntax with these compilers.
